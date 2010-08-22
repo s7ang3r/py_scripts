@@ -10,7 +10,7 @@ import urlparse
 
 LOGIN = "login"
 PASSWORD = "password"
-APP_NAME = "qmn"
+APP_NAME = "qmn" #Register new application!!!
 APP_VERSION = "0.0.4"
 CHECK_LINE = "#AUDIOSCROBBLER/1.1\n"
 
