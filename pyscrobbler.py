@@ -11,6 +11,8 @@ import urlparse
 LOGIN = "login"
 PASSWORD = "password"
 CHECK_LINE = "#AUDIOSCROBBLER/1.1\n"
+APP_NAME = "pyscrobbler"
+APP_VERSION = "0.0.4"
 
 def ParseLog(filename):
     try:
@@ -27,6 +29,8 @@ def CreateSession():
     timestamp = int(time.time())
     token = hashlib.md5(PASSWORD + str(timestamp)).hexdigest()
     connection = httplib.HTTPConnection("post.audioscrobbler.com") 
+    connection.request("GET", "/?hs=true&p=1.2.1&c=%s&v=%s&u=%s&t=%i&a=%s" % (APP_NAME, APP_VERSION, LOGIN, timestamp, token))
+
     return 0;
 
 def Scrobble():
