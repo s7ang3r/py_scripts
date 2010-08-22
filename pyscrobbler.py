@@ -10,9 +10,9 @@ import urlparse
 
 LOGIN = "login"
 PASSWORD = "password"
-CHECK_LINE = "#AUDIOSCROBBLER/1.1\n"
-APP_NAME = "pyscrobbler"
+APP_NAME = "qmn"
 APP_VERSION = "0.0.4"
+CHECK_LINE = "#AUDIOSCROBBLER/1.1\n"
 
 def ParseLog(filename):
     try:
@@ -30,7 +30,18 @@ def CreateSession():
     token = hashlib.md5(PASSWORD + str(timestamp)).hexdigest()
     connection = httplib.HTTPConnection("post.audioscrobbler.com") 
     connection.request("GET", "/?hs=true&p=1.2.1&c=%s&v=%s&u=%s&t=%i&a=%s" % (APP_NAME, APP_VERSION, LOGIN, timestamp, token))
-
+    response = connection.getresponse()
+    connection.close();
+    if (response.status != 200):
+        print "Can't connect.ы"
+        
+        quit()
+    data = response.read().split("\n")
+    data = [elem for elem in data if len(elem) > 0]
+    if (data[0] != "OK"):
+        print "Last.fm error: %s" % data[0]
+        
+        quit()
     return 0;
 
 def Scrobble():
