@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
-import string
-import re
 import crypt
+import re
+import string
+import sys
 
 __author__ = "Rodion Brodetsky"
 __copyright__ = "Copyright 2010"
@@ -16,13 +16,13 @@ __email__ = "s7ang3r@gmail.com"
 __status__ = "Production"
 
 def MakeTripCode (expression):
-    expression = expression.decode('utf8','ignore')\
-        .encode('shift_jis','ignore')\
-        .replace("'",'')\
-        .replace(',',',')\
-        .replace('<','&lt;')\
-        .replace('>','&gt;')\
-        .replace('"','&quot;')
+    expression = expression.decode('utf8', 'ignore')\
+        .encode('shift_jis', 'ignore')\
+        .replace("'", '')\
+        .replace(',', ',')\
+        .replace('<', '&lt;')\
+        .replace('>', '&gt;')\
+        .replace('"', '&quot;')
     e_expression = (expression + '...')[1:3]
     e_expression = re.compile('[^\.-z]').sub('.', e_expression)
     e_expression = e_expression.translate(string.maketrans(':;<=>?@[\\]^_`', 'ABCDEFGabcdef'))
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         iterator = 0
 
     while True:
-        if re.search(sys.argv[1],string.lower(MakeTripCode(str(iterator))))>-1:
+        if re.search(sys.argv[1], string.lower(MakeTripCode(str(iterator)))) > -1:
             print iterator, ":", MakeTripCode(str(iterator))
         elif iterator % 100000 == 0:
             print iterator
