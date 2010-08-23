@@ -59,7 +59,7 @@ def Scrobble(filename):
     for line in logfile.xreadlines():
         data = line.split("\t")
         if (data[5] == "L"):
-            params = urlencode({'s': SESSION_ID,\
+            params = urllib.urlencode({'s': SESSION_ID,\
                     'a[0]': data[0],\
                     't[0]': data[2],\
                     'i[0]': int(data[6])+timedelay,\
@@ -69,8 +69,18 @@ def Scrobble(filename):
                     'b[0]': data[1],\
                     'n[0]': data[3],\
                     'm[0]': data[7]})
+            conn.request("POST", SUBMISSION_PATH, params, {"Content-type": "application/x-www-form-urlencoded"})
+            response = conn.getresponse().read()[:-1]
+            if (response == "OK"):
+                success+=1
+            else:
+                failure+=1
+            print "%s - %s [%s]" % (data[0], data[2], response)
+    conn.close();
+    logfile.close()
+    print "%i tracks submitted.\n%i failed" % (success, failure)
 
 if __name__ == "__main__":
-    ParseLog(".scrobbler.log")
+    #ParseLog(".scrobbler.log")
     #CreateSession()
     Scrobble('.scrobbler.log')
