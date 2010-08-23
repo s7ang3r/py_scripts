@@ -45,4 +45,3 @@ if __name__ == "__main__":
         elif iterator % 100000 == 0:
             print iterator
         iterator += 1
-
