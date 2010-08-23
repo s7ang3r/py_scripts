@@ -8,11 +8,11 @@ import urllib
 import httplib
 import urlparse
 
-LOGIN = "login"
-PASSWORD = "password"
-APP_NAME = "qmn" #Register new application!!!
-APP_VERSION = "0.0.4"
-CHECK_LINE = "#AUDIOSCROBBLER/1.1\n"
+LOGIN = ''
+PASSWORD = ''
+APP_NAME = 'qmn' #Register new application!!!
+APP_VERSION = '1.2.1'
+CHECK_LINE = '#AUDIOSCROBBLER/1.1\n'
 
 def ParseLog(filename):
     try:
@@ -21,7 +21,7 @@ def ParseLog(filename):
        print "Cant open file %s" % logfile
        quit()
     if (logfile.readline()!=CHECK_LINE):
-        print "Unknown file format"
+        print "Unknown file format."
         logfile.close()
         quit()
 
@@ -31,9 +31,10 @@ def CreateSession():
     connection = httplib.HTTPConnection("post.audioscrobbler.com") 
     connection.request("GET", "/?hs=true&p=1.2.1&c=%s&v=%s&u=%s&t=%i&a=%s" % (APP_NAME, APP_VERSION, LOGIN, timestamp, token))
     response = connection.getresponse()
-    connection.close();
+    connection.close()
+
     if (response.status != 200):
-        print "Can't connect.ы"
+        print "Can't connect."
         
         quit()
     data = response.read().split("\n")
@@ -42,12 +43,16 @@ def CreateSession():
         print "Last.fm error: %s" % data[0]
         
         quit()
+    url = urlparse(data[3])
+    submission_url = url.netloc
+    submission_path = url.path
+    session_id = data[1]
     return 0;
 
 def Scrobble():
     return 0;
 
 if __name__ == "__main__":
-    ParseLog(".scrobbler.log")
-    CreateSession()
+    #ParseLog(".scrobbler.log")
+    #CreateSession()
     Scrobble()
