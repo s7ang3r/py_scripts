@@ -13,6 +13,7 @@ PASSWORD = ''
 APP_NAME = 'qmn' #Register new application!!!
 APP_VERSION = '1.2.1'
 CHECK_LINE = '#AUDIOSCROBBLER/1.1\n'
+TZ = 0
 
 def ParseLog(filename):
     try:
@@ -49,12 +50,27 @@ def CreateSession():
     session_id = data[1]
     return 0;
 
-def Scrobble():
+def Scrobble(filename):
     success = 0
     failure = 0
-    
+    timedelay = -3600*TZ
+    logfile = open( filename , 'r' )
+    print "Scrobbling started."
+    for line in logfile.xreadlines():
+        data = line.split("\t")
+        if (data[5] == "L"):
+            params = urlencode({'s': SESSION_ID,\
+                    'a[0]': data[0],\
+                    't[0]': data[2],\
+                    'i[0]': int(data[6])+timedelay,\
+                    'o[0]': 'P',\
+                    'r[0]': '',\
+                    'l[0]': data[4],\
+                    'b[0]': data[1],\
+                    'n[0]': data[3],\
+                    'm[0]': data[7]})
 
 if __name__ == "__main__":
-    #ParseLog(".scrobbler.log")
+    ParseLog(".scrobbler.log")
     #CreateSession()
-    Scrobble()
+    Scrobble('.scrobbler.log')
