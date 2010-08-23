@@ -6,6 +6,15 @@ import string
 import re
 import crypt
 
+__author__ = "Rodion Brodetsky"
+__copyright__ = "Copyright 2010"
+__credits__ = ["Rodion Brodetsky"]
+__license__ = "GPL"
+__version__ = "0.0.5"
+__maintainer__ = "Rodion Brodetsky"
+__email__ = "s7ang3r@gmail.com"
+__status__ = "Production"
+
 def MakeTripCode (expression):
     expression = expression.decode('utf8','ignore')\
         .encode('shift_jis','ignore')\
@@ -22,7 +31,7 @@ def MakeTripCode (expression):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print "Program requires arguments."
+        print "Program requires arguments.\n"
         sys.exit(0)
 
     try:
