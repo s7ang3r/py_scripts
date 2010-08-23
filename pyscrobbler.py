@@ -50,7 +50,9 @@ def CreateSession():
     return 0;
 
 def Scrobble():
-    return 0;
+    success = 0
+    failure = 0
+    
 
 if __name__ == "__main__":
     #ParseLog(".scrobbler.log")
