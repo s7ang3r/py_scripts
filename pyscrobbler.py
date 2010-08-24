@@ -14,20 +14,21 @@ APP_NAME = 'qmn' #Register new application!!!
 APP_VERSION = '1.2.1'
 TZ = 0
 
-def CreateSession():
+def Scrobble(filename):
+    success = 0
+    failure = 0
     timestamp = int(time.time())
     token = hashlib.md5(PASSWORD + str(timestamp)).hexdigest()
-    connection = httplib.HTTPConnection("post.audioscrobbler.com") 
+    connection = httplib.HTTPConnection("post.audioscrobbler.com")
     connection.request("GET", "/?hs=true&p=1.2.1&c=%s&v=%s&u=%s&t=%i&a=%s" %\
                        (APP_NAME, APP_VERSION, LOGIN, timestamp, token))
     response = connection.getresponse()
     connection.close()
-
     if (response.status != 200):
         print "Can't connect."
         quit()
     data = response.read().split("\n")
-    data = [elem for elem in data if len(elem) > 0]
+    data = [elem for elem in data if len(elem) > 0]  
     if (data[0] != "OK"):
         print "Last.fm error: %s" % data[0]
         quit()
@@ -35,11 +36,9 @@ def CreateSession():
     submission_url = url.netloc
     submission_path = url.path
     session_id = data[1]
-    return 0;
 
-def Scrobble(filename):
-    success = 0
-    failure = 0
+
+    token = hashlib.md5(PASSWORD + str(timestamp)).hexdigest()
     timedelay = -3600*TZ
     print "Scrobbling started."
     for line in filename.xreadlines():
@@ -55,14 +54,14 @@ def Scrobble(filename):
                     'b[0]': data[1],\
                     'n[0]': data[3],\
                     'm[0]': data[7]})
-            conn.request("POST", submission_path, params, {"Content-type": "application/x-www-form-urlencoded"})
+            connection.request("POST", submission_path, params, {"Content-type": "application/x-www-form-urlencoded"})
             response = conn.getresponse().read()[:-1]
             if (response == "OK"):
                 success+=1
             else:
                 failure+=1
             print "%s - %s [%s]" % (data[0], data[2], response)
-    conn.close();
+    connection.close();
     filename.close()
     print "%i tracks submitted.\n%i failed" % (success, failure)
 
@@ -76,5 +75,4 @@ if __name__ == "__main__":
         print "Unknown file format."
         filename.close()
         quit()
-    #CreateSession()
     Scrobble(scrobbler_file)
