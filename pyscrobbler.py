@@ -17,6 +17,7 @@ TZ = 0
 def Scrobble(filename):
     success = 0
     failure = 0
+    timedelay = -3600*TZ
     timestamp = int(time.time())
     token = hashlib.md5(PASSWORD + str(timestamp)).hexdigest()
     connection = httplib.HTTPConnection("post.audioscrobbler.com")
@@ -36,10 +37,6 @@ def Scrobble(filename):
     submission_url = url.netloc
     submission_path = url.path
     session_id = data[1]
-
-
-    token = hashlib.md5(PASSWORD + str(timestamp)).hexdigest()
-    timedelay = -3600*TZ
     print "Scrobbling started."
     for line in filename.xreadlines():
         data = line.split("\t")
