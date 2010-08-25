@@ -18,6 +18,11 @@ import urllib
 import urllib2
 import urlparse
 
+def ReadTorrent(filename):
+    return bencode.bdecode(open(filename).read())
+
+def GetInfoHash(torrent_info):
+    return hashlib.sha1(bencode.bencode(torrent_info)).digest()
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
