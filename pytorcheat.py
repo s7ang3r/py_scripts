@@ -36,7 +36,20 @@ def MakePeerId():
     random_string = ''.join(random.choice(alphabet) for i in range(num_random_chars))
     return PEER_ID_PREFIX + random_string
 
-
+def MakeAnnounceUrl(torrent_data, peer_id, uploaded):
+    base_url = torrent_data['announce']
+    scheme, netloc, path, base_query, fragment = urlparse.urlsplit(base_url)
+    base_query_list = cgi.parse_qsl(base_query)
+    query_list = base_query_list + [
+            ('info_hash', GetInfoHash(torrent_data['info'])),
+            ('peer_id', peer_id),
+            ('port', PORT),
+            ('uploaded', uploaded),
+            ('downloaded', GetFileSize(torrent_data['info'])),
+            ('left', 0),
+    ]
+    query = urllib.urlencode(query_list)
+    return urlparse.urlunsplit((scheme, netloc, path, query, fragment))
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
