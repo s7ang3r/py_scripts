@@ -51,7 +51,26 @@ def MakeAnnounceUrl(torrent_data, peer_id, uploaded):
     query = urllib.urlencode(query_list)
     return urlparse.urlunsplit((scheme, netloc, path, query, fragment))
 
+def FakeUpload(torrent_data):
+    peer_id = MakePeerId()
+    uploaded = 0
+    while True:
+        url = MakeAnnounceUrl(torrent_data, peer_id, uploaded)
+        request = urllib2.Request(url, None, {'User-Agent': USER_AGENT})
+        response = bencode.bdecode(urllib2.urlopen(request).read())
+        if 'failure' in response:
+            print 'Announce failed: %s' % response['failure']
+            time.sleep(60)
+        else:
+            interval = response['interval']
+            will_sleep_until = (datetime.datetime.now() + datetime.timedelta(seconds=interval)).strftime('%H:%M:%S')
+            print 'Uploaded %s bytes, next request at %s.' % (uploaded, will_sleep_until)
+            uploaded += UPLOAD_SPEED * interval
+            time.sleep(interval)
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print 'Usage: %s <filename.torrent>' % sys.argv[0]
         sys.exit(1)
+    torrent_data = read_torrent(sys.argv[1])
+    fake_upload(torrent_data)
