@@ -72,5 +72,5 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         print 'Usage: %s <filename.torrent>' % sys.argv[0]
         sys.exit(1)
-    torrent_data = read_torrent(sys.argv[1])
+    torrent_data = ReadTorrent(sys.argv[1])
     FakeUpload(torrent_data)
