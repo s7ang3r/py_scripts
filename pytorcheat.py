@@ -24,6 +24,20 @@ def ReadTorrent(filename):
 def GetInfoHash(torrent_info):
     return hashlib.sha1(bencode.bencode(torrent_info)).digest()
 
+def GetFileSize(torrent_info):
+    try:
+        return torrent_info['length']
+    except KeyError:
+        return sum(file['length'] for file in torrent_info['files'])
+
+def MakePeerId():
+    num_random_chars = 20 - len(PEER_ID_PREFIX)
+    alphabet = string.ascii_letters + string.digits
+    random_string = ''.join(random.choice(alphabet) for i in range(num_random_chars))
+    return PEER_ID_PREFIX + random_string
+
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print 'Usage: %s <filename.torrent>' % sys.argv[0]
