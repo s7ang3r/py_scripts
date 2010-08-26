@@ -1,0 +1,17 @@
+*.pyc
+*.pyo
+*.pyd
+*.tmp*
+*~
+*.bak
+*.swp
+*.tar
+*.tar.gz
+*.tar.bz2
+*.7z
+*.gz
+*.tar
+*.zip
+*.log
+*.sql
+*.sqlite
