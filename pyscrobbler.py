@@ -53,7 +53,7 @@ def Scrobble(filename):
                                            'n[0]': data[3],\
                                            'm[0]': data[7]})
                 connection.request("POST", submission_path, params,{"Content-type": "application/x-www-form-urlencoded"})
-                response = conn.getresponse().read()[:-1]
+                response = connection.getresponse().read()[:-1]
                 if (response == "OK"):
                     success+=1
                 else:
