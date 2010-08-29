@@ -11,7 +11,11 @@ URL = '/post/index.xml'
 LIMIT = 1000
 
 def Download(url):
-    return 0
+    webFile = urllib.urlopen(url)
+    localFile = open(url.split('/')[-1], 'w')
+    localFile.write(webFile.read())
+    webFile.close()
+    localFile.close()
 
 def FetchIndex(limit, page):
     return 0
