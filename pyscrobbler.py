@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import time
-import os
 import hashlib
 import urllib
 import httplib
@@ -11,19 +10,23 @@ import urlparse
 FILENAME = ".scrobbler.log"
 LOGIN = ""
 PASSWORD = ""
-APP_NAME = "qts" #Register new application!!!
+APP_NAME = "qts"
 APP_VERSION = "0.11"
 TZ = 0
+
+def TimeStamp():
+    return int(time.time())
+
+def Token(pwd):
+    return hashlib.md5(hashlib.md5(pwd).hexdigest() + str(TimeStamp())).hexdigest()
 
 def Scrobble(filename):
     success = 0
     failure = 0
     timedelay = -3600*TZ
-    timestamp = int(time.time())
-    token = hashlib.md5(hashlib.md5(PASSWORD).hexdigest() + str(timestamp)).hexdigest()
     connection = httplib.HTTPConnection("post.audioscrobbler.com")
     connection.request("GET", "/?hs=true&p=1.2.1&c=%s&v=%s&u=%s&t=%i&a=%s" %\
-                       (APP_NAME, APP_VERSION, LOGIN, timestamp, token))
+                       (APP_NAME, APP_VERSION, LOGIN, TimeStamp(), Token(PASSWORD)))
     response = connection.getresponse()
     connection.close()
     if (response.status != 200):
@@ -38,6 +41,8 @@ def Scrobble(filename):
     submission_url = url.netloc
     submission_path = url.path
     session_id = data[1]
+    connection = httplib.HTTPConnection(submission_url)
+    print "Scrobbling started."
     for line in filename.xreadlines():
         if not line.startswith('#'):
             data = line.split("\t")
@@ -72,6 +77,6 @@ if __name__ == "__main__":
         quit()
     if (scrobbler_file.readline()!='#AUDIOSCROBBLER/1.1\n'):
         print "Unknown file format."
-        filename.close()
+        scrobbler_file.close()
         quit()
     Scrobble(scrobbler_file)
