@@ -18,7 +18,14 @@ def Download(url):
     localFile.close()
 
 def FetchIndex(limit, page):
-    return 0
+    connection = httplib.HTTPConnection(HOST)
+    args = urllib.urlencode({'tags': sys.argv[1], 'limit': limit, 'page': page})
+    connection.request('GET', URL + '?' + args)
+    response = connection.getresponse()
+    if response.status != 200:
+        print 'Unable to fetch index: HTTP%d' % response.status
+        exit(1)
+    return response.read()
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
