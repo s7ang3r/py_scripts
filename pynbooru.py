@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import sys
-import os
 import httplib
+import os
 import re
-import urllib
+import sys
 import threading
 import time
+import urllib
 
 HOST = 'danbooru.donmai.us'
 #HOST='konachan.com'
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
     except:
-        sys.stderr.write('Could not locate number of posts which match this tag.')
+        print "Could not locate number of posts which match this tag."
         exit(1)
     if count > LIMIT:
         for page in range(2, count / LIMIT + 2):
@@ -57,8 +57,8 @@ if __name__ == "__main__":
     print "Starting download."
     for img in imgs:
         print(img)
-        thread = threading.Thread(target=Download, args=(img,dirname,))
+        thread = threading.Thread(target=Download, args=(img, dirname,))
         thread.setDaemon(True)
         thread.start()
-        while threading.activeCount()>10:
+        while threading.activeCount() > 10:
             time.sleep(5)
