@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import httplib
 import re
 import urllib
+import threading
+import time
 
 HOST = 'danbooru.donmai.us'
 #HOST='konachan.com'
@@ -12,7 +15,8 @@ HOST = 'danbooru.donmai.us'
 URL = '/post/index.xml'
 LIMIT = 1000
 
-def Download(url):
+def Download(url, path):
+    os.chdir(path)
     webFile = urllib.urlopen(url)
     localFile = open(url.split('/')[-1], 'w')
     localFile.write(webFile.read())
@@ -30,9 +34,15 @@ def FetchIndex(limit, page):
     return response.read()
 
 if __name__ == "__main__":
+    dirname = os.getcwd()
     if len(sys.argv) < 2:
         print "Usage: %s tag" % sys.argv[0]
         exit(1)
+    try:
+        dirname = os.path.abspath(sys.argv[1])
+    except OSError:
+        pass
+    os.mkdir(dirname)
     data = FetchIndex(LIMIT, 1)
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
@@ -45,4 +55,8 @@ if __name__ == "__main__":
     imgs = re.findall('file_url="([^"]+)"', data)
     for img in imgs:
         print(img)
-        Download(img)
+        thread = threading.Thread(target=Download, args=(img,dirname,))
+        if threading.activeCount() >= 10:
+            time.sleep(5)
+        else:
+            thread.start()
