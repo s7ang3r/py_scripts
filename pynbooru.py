@@ -53,10 +53,12 @@ if __name__ == "__main__":
         for page in range(2, count / LIMIT + 2):
             data += FetchIndex(LIMIT, page)
     imgs = re.findall('file_url="([^"]+)"', data)
+    print len(imgs)
     for img in imgs:
         print(img)
         thread = threading.Thread(target=Download, args=(img,dirname,))
         if threading.activeCount() >= 10:
             time.sleep(5)
+            thread.start()
         else:
             thread.start()
