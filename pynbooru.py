@@ -53,7 +53,8 @@ if __name__ == "__main__":
         for page in range(2, count / LIMIT + 2):
             data += FetchIndex(LIMIT, page)
     imgs = re.findall('file_url="([^"]+)"', data)
-    print len(imgs)
+    print "Found %s images by tag: %s." % (len(imgs), sys.argv[1])
+    print "Starting download."
     for img in imgs:
         print(img)
         thread = threading.Thread(target=Download, args=(img,dirname,))
