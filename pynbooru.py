@@ -18,7 +18,7 @@ LIMIT = 1000
 def Download(url, path):
     os.chdir(path)
     webFile = urllib.urlopen(url)
-    localFile = open(url.split('/')[-1], 'w')
+    localFile = open(url.split('/')[-1], 'wb+')
     localFile.write(webFile.read())
     webFile.close()
     localFile.close()
