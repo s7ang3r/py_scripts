@@ -58,8 +58,7 @@ if __name__ == "__main__":
     for img in imgs:
         print(img)
         thread = threading.Thread(target=Download, args=(img,dirname,))
-        if threading.activeCount() >= 10:
+        thread.setDaemon(True)
+        thread.start()
+        while threading.activeCount()>10:
             time.sleep(5)
-            thread.start()
-        else:
-            thread.start()
