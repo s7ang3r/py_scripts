@@ -60,5 +60,5 @@ if __name__ == "__main__":
         thread = threading.Thread(target=Download, args=(img, dirname,))
         thread.setDaemon(True)
         thread.start()
-        while threading.activeCount() > 10:
+        while threading.activeCount() > 5:
             time.sleep(5)
