@@ -16,12 +16,13 @@ URL = '/post/index.xml'
 LIMIT = 1000
 
 def Download(url, path):
-    os.chdir(path)
+    print "Downloading %s" % url
     webFile = urllib.urlopen(url)
-    localFile = open(url.split('/')[-1], 'wb+')
+    localFile = open(path+urllib.unquote(url.split('/')[-1]), 'wb+')
     localFile.write(webFile.read())
     webFile.close()
     localFile.close()
+    print "Downloading of %s complete" % url
 
 def FetchIndex(limit, page):
     connection = httplib.HTTPConnection(HOST)
@@ -56,9 +57,7 @@ if __name__ == "__main__":
     print "Found %s images by tag: %s." % (len(imgs), sys.argv[1])
     print "Starting download."
     for img in imgs:
-        print(img)
-        thread = threading.Thread(target=Download, args=(img, dirname,))
-        thread.setDaemon(True)
+        thread = threading.Thread(target=Download, args=(img, dirname+'/',))
         thread.start()
         while threading.activeCount() > 5:
-            time.sleep(5)
+            time.sleep(0.5)
