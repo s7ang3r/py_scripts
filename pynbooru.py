@@ -16,13 +16,10 @@ URL = '/post/index.xml'
 LIMIT = 1000
 
 def Download(url, path):
-    print "Downloading %s" % url
-    webFile = urllib.urlopen(url)
-    localFile = open(path+urllib.unquote(url.split('/')[-1]), 'wb+')
-    localFile.write(webFile.read())
-    webFile.close()
-    localFile.close()
-    print "Downloading of %s complete" % url
+    image = url.split("/")[-1]
+    print "Downloading %s" % url 
+    urllib.urlretrieve(url, path+image,)
+    print "Downloading of %s complete" % image
 
 def FetchIndex(limit, page):
     connection = httplib.HTTPConnection(HOST)
