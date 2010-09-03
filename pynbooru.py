@@ -17,7 +17,7 @@ LIMIT = 1000
 
 def Download(url, path):
     image = url.split("/")[-1]
-    print "Downloading %s" % url 
+    print "Downloading %s" % url
     urllib.urlretrieve(url, path+image,)
     print "Downloading of %s complete" % image
 
@@ -56,5 +56,5 @@ if __name__ == "__main__":
     for img in imgs:
         thread = threading.Thread(target=Download, args=(img, dirname+'/',))
         thread.start()
-        while threading.activeCount() > 5:
+        while threading.activeCount() > 10:
             time.sleep(0.5)
