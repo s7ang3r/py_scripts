@@ -24,17 +24,6 @@ def Download(url, path):
     localFile.close()
     print "Downloading of %s complete" % url
 
-def ProgressBar(self, blocks, block_size, total_size, bar_width=40):
-        width = bar_width - 10
-        percent = (blocks * block_size * 100) / total_size
-        equals = (percent * width) / 100
-        spaces = (width-equals-len(str(percent))) + 3
-        progressBar = '[ %s> %s%%%s ]' % ('=' * equals, str(percent), ' ' * spaces)
-        sys.stdout.write('\r' + progressBar)
-        if percent == 100:
-            sys.stdout.write('\n\n')
-        sys.stdout.flush()
-
 def FetchIndex(limit, page):
     connection = httplib.HTTPConnection(HOST)
     args = urllib.urlencode({'tags': sys.argv[1], 'limit': limit, 'page': page})
