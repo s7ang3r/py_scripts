@@ -15,6 +15,10 @@ HOST = 'danbooru.donmai.us'
 URL = '/post/index.xml'
 LIMIT = 1000
 
+def MakeDir(dir):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
 def Download(url, path):
     image = url.split("/")[-1]
     print "Downloading %s" % url
@@ -40,7 +44,7 @@ if __name__ == "__main__":
         dirname = os.path.abspath(sys.argv[1])
     except OSError:
         pass
-    os.mkdir(dirname)
+    MakeDir(dirname)
     data = FetchIndex(LIMIT, 1)
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
