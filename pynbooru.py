@@ -9,9 +9,14 @@ import threading
 import time
 import urllib
 
-HOST = 'danbooru.donmai.us'
-#HOST='konachan.com'
-#HOST='chan.sankakucomplex.com'
+
+#HOST = 'e-shuushuu.net'
+#HOST = 'gelbooru.com'
+#HOST = 'nekobooru.net'
+#HOST = 'danbooru.donmai.us'
+#HOST = 'konachan.com'
+#HOST = 'chan.sankakucomplex.com'
+HOST = 'moe.imouto.org'
 URL = '/post/index.xml'
 LIMIT = 1000
 
