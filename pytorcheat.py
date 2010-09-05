@@ -19,13 +19,8 @@ import urllib2
 import urlparse
 
 __author__ = "Rodion Brodetsky"
-__copyright__ = "Copyright 2010"
-__credits__ = ["Rodion Brodetsky"]
 __license__ = "GPL"
 __version__ = "0.0.2"
-__maintainer__ = "Rodion Brodetsky"
-__email__ = "s7ang3r@gmail.com"
-__status__ = "Production"
 
 def ReadTorrent(filename):
     return bencode.bdecode(open(filename).read())
