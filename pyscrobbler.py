@@ -7,7 +7,6 @@ import urllib
 import httplib
 import urlparse
 
-FILENAME = ".scrobbler.log"
 LOGIN = ""
 PASSWORD = ""
 APP_NAME = "qts"
@@ -71,9 +70,9 @@ def Scrobble(filename):
 
 if __name__ == "__main__":
     try:
-        scrobbler_file = open(FILENAME, 'r')
+        scrobbler_file = open('.scrobbler.log', 'r')
     except IOError:
-        print "Cant open file %s" % scrobbler_file
+        print "Cant open file .scrobbler.log"
         quit()
     if (scrobbler_file.readline()!='#AUDIOSCROBBLER/1.1\n'):
         print "Unknown file format."
