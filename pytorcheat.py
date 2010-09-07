@@ -17,6 +17,7 @@ import time
 import urllib
 import urllib2
 import urlparse
+import threading
 
 __author__ = "Rodion Brodetsky"
 __license__ = "GPL"
@@ -73,8 +74,10 @@ def FakeUpload(torrent_data):
             time.sleep(interval)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print 'Usage: %s <filename.torrent>' % sys.argv[0]
+    if len(sys.argv) < 2:
+        print 'Usage: %s <filename.torrent> or several torrents' % sys.argv[0]
         sys.exit(1)
-    torrent_data = ReadTorrent(sys.argv[1])
-    FakeUpload(torrent_data)
+    for torrent in sys.argv[1:]:
+        torrent_data = ReadTorrent(torrent)
+        thread = threading.Thread(target=FakeUpload, args=(torrent_data,))
+        thread.start()
