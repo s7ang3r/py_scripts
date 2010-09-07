@@ -22,7 +22,7 @@ import urlparse
 
 __author__ = "Rodion Brodetsky"
 __license__ = "GPL"
-__version__ = "0.0.2"
+__version__ = "0.0.5"
 
 def ReadTorrent(filename):
     return bencode.bdecode(open(filename).read())
