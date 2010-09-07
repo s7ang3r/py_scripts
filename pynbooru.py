@@ -9,7 +9,6 @@ import threading
 import time
 import urllib
 
-
 #HOST = 'e-shuushuu.net'
 #HOST = 'gelbooru.com'
 #HOST = 'nekobooru.net'
@@ -27,7 +26,7 @@ def MakeDir(dir):
 def Download(url, path):
     image = url.split("/")[-1]
     print "Downloading %s" % url
-    urllib.urlretrieve(url, path+image,)
+    urllib.urlretrieve(url, path + image)
     print "Downloading of %s complete" % image
 
 def FetchIndex(limit, page):
@@ -41,7 +40,6 @@ def FetchIndex(limit, page):
     return response.read()
 
 if __name__ == "__main__":
-    dirname = os.getcwd()
     if len(sys.argv) < 2:
         print "Usage: %s tag" % sys.argv[0]
         exit(1)
@@ -63,7 +61,7 @@ if __name__ == "__main__":
     print "Found %s images by tag: %s." % (len(imgs), sys.argv[1])
     print "Starting download."
     for img in imgs:
-        thread = threading.Thread(target=Download, args=(img, dirname+'/',))
+        thread = threading.Thread(target=Download, args=(img, dirname + '/'))
         thread.start()
         while threading.activeCount() > 10:
             time.sleep(0.5)
