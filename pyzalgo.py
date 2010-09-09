@@ -15,5 +15,9 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u033a', u'\u033b', u'\u033c', u'\u0345', u'\u0347', u'\u0348',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
+def GenZalgoText(text, high = True, mid = False, low = False):
+    pass
+
 if __name__ == "__main__":
+    GenZalgoText("Test")
     exit( 1 )
