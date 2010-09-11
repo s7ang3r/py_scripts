@@ -19,8 +19,6 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
 def GenZalgoText( char, zchar ):
-    chars = [char]
-    
     pass
 
 def ZalgoChar( text, high = True, mid = False, low = False ):
@@ -30,6 +28,7 @@ def ZalgoChar( text, high = True, mid = False, low = False ):
                     zalgo_down if low else None ]
                    if char]
     print zalgo_chars
+    GenZalgoText (text, zalgo_chars)
 
 if __name__ == "__main__":
     ZalgoChar( "Test" )
