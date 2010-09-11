@@ -44,5 +44,5 @@ if __name__ == "__main__":
     except IOError:
         print "Error while opening output file."
         exit ( 1 )
-    print blargltext( "ZALGO" )
+    print ZalgoChar( "ZALGO" )
     exit( 1 )
