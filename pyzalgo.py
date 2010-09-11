@@ -1,3 +1,6 @@
+import sys
+import random
+
 zalgo_up = [u'\u030d', u'\u030e', u'\u0304', u'\u0305', u'\u033f', u'\u0311',
             u'\u0306', u'\u0310', u'\u0352', u'\u0357', u'\u0351', u'\u0307',
             u'\u0308', u'\u030a', u'\u0342', u'\u0343', u'\u0344', u'\u034a',
@@ -15,7 +18,9 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u033a', u'\u033b', u'\u033c', u'\u0345', u'\u0347', u'\u0348',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
-def GenZalgoText( char ):
+def GenZalgoText( char, zchar ):
+    chars = [char]
+    
     pass
 
 def ZalgoChar( text, high = True, mid = False, low = False ):
