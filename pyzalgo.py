@@ -1,5 +1,6 @@
 import sys
 import random
+import itertools
 
 zalgo_up = [u'\u030d', u'\u030e', u'\u0304', u'\u0305', u'\u033f', u'\u0311',
             u'\u0306', u'\u0310', u'\u0352', u'\u0357', u'\u0351', u'\u0307',
@@ -19,23 +20,22 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
 def GenZalgoText( char, zchar ):
-    print "GenZalgoText"
-    print char
-    print zchar
+    chars = [char]
+    for z in zchar:
+        chars.extend( random.choice( z ) for _ in xrange( random.randint( 1, 3 ) ) )
+    return chars
 
-def ZalgoChar( text, high = True, mid = False, low = False ):
+def ZalgoChars( text, high = True, mid = False, low = False ):
     zalgo_chars = [char for char in 
                    [ zalgo_mid  if mid else None,
                     zalgo_up  if high else None,
                     zalgo_down if low else None ]
                    if char]
-    print "ZalgoChar"
-    print zalgo_chars
-    GenZalgoText (text, zalgo_chars)
+    return u''.join(GenZalgoText(text, zalgo_chars)) 
 
 if __name__ == "__main__":
     if len( sys.argv ) < 2:
         print 'Usage: %s <some text>' % sys.argv[0]
         exit( 1 )
-    print blargltext( sys.argv[1] )
+    print ZalgoChars( sys.argv[1] )
     exit( 1 )
