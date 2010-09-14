@@ -35,17 +35,7 @@ def ZalgoChar( text, high = True, mid = False, low = False ):
 
 if __name__ == "__main__":
     if len( sys.argv ) < 2:
-        print 'Usage: %s <input file> <output file>' % sys.argv[0]
+        print 'Usage: %s <some text>' % sys.argv[0]
         exit( 1 )
-    try:
-        input_file = open( sys.argv[1], 'r' )
-    except IOError:
-        print "Error while opening input file."
-        exit ( 1 )
-    try:
-        output_file = open ( sys.argv[2], 'w' )
-    except IOError:
-        print "Error while opening output file."
-        exit ( 1 )
-    print ZalgoChar( "ZALGO" )
+    print blargltext( sys.argv[1] )
     exit( 1 )
