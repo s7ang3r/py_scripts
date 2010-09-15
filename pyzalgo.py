@@ -22,7 +22,7 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
 def GenZalgoText( char, zchar ):
     chars = [char]
     for z in zchar:
-        chars.extend( random.choice( z ) for _ in xrange( random.randint( 1, 30 ) ) )
+        chars.extend( random.choice( z ) for _ in xrange( random.randint( 1, 3 ) ) )
     return chars
 
 def ZalgoChars( text, high = True, mid = False, low = False ):
