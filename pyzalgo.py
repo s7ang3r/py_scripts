@@ -31,7 +31,7 @@ def ZalgoChars( text, high = True, mid = False, low = False ):
                     zalgo_up  if high else None,
                     zalgo_down if low else None ]
                    if char]
-    return u''.join(GenZalgoText(text, zalgo_chars))
+    return u''.join( GenZalgoText( text, zalgo_chars ) )
 
 if __name__ == "__main__":
     if len( sys.argv ) < 2:
