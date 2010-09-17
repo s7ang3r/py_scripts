@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
 import httplib
