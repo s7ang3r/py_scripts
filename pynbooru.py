@@ -66,8 +66,8 @@ if __name__ == "__main__":
     print "Found %s images by tag: %s." % (len(imgs), sys.argv[1])
     print "Starting download."
     for img in imgs:
-        thread = threading.Thread(target = Download,\
-                                  args = (img, dirname + '/'))
+        thread = threading.Thread(target=Download,\
+                                  args=(img, dirname + '/'))
         thread.start()
         while threading.activeCount() > 10:
             time.sleep(0.5)
