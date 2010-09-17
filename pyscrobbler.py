@@ -80,6 +80,7 @@ def Scrobble(filename):
     filename.close()
     print "%i tracks submitted.\n%i failed" % (success, failure)
 
+
 if __name__ == "__main__":
     try:
         scrobbler_file = open('.scrobbler.log', 'r')
