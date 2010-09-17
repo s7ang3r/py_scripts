@@ -1,3 +1,6 @@
+#!/usr/bin/python -O
+# -*- coding: utf-8 -*-
+
 import sys
 import random
 import itertools
