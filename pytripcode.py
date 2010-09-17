@@ -6,10 +6,6 @@ import re
 import string
 import sys
 
-__author__ = "Rodion Brodetsky"
-__license__ = "GPL"
-__version__ = "0.0.5"
-
 def MakeTripCode ( expression ):
     expression = expression.decode( 'utf8', 'ignore' )\
         .encode( 'shift_jis', 'ignore' )\
