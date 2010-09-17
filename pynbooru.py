@@ -44,6 +44,7 @@ def FetchIndex(limit, page):
         exit(1)
     return response.read()
 
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print "Usage: %s tag" % sys.argv[0]
