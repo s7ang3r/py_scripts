@@ -22,23 +22,26 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u033a', u'\u033b', u'\u033c', u'\u0345', u'\u0347', u'\u0348',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
-def GenZalgoText( char, zchar ):
+
+def GenZalgoText(char, zchar):
     chars = [char]
     for z in zchar:
-        chars.extend( random.choice( z ) for _ in xrange( random.randint( 1, 3 ) ) )
+        chars.extend(random.choice(z) for _ in xrange(random.randint(1, 3)))
     return chars
 
-def ZalgoChars( text, high = True, mid = False, low = False ):
+
+def ZalgoChars(text, high=True, mid=False, low=False):
     zalgo_chars = [char for char in
-                   [ zalgo_mid  if mid else None,
+                   [zalgo_mid  if mid else None,
                     zalgo_up  if high else None,
-                    zalgo_down if low else None ]
+                    zalgo_down if low else None]
                    if char]
-    return u''.join( GenZalgoText( text, zalgo_chars ) )
+    return u''.join(GenZalgoText(text, zalgo_chars))
+
 
 if __name__ == "__main__":
-    if len( sys.argv ) < 2:
+    if len(sys.argv) < 2:
         print 'Usage: %s <some text>' % sys.argv[0]
-        exit( 1 )
-    print ZalgoChars( sys.argv[1] )
-    exit( 1 )
+        exit(1)
+    print ZalgoChars(sys.argv[1])
+    exit(1)
