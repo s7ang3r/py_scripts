@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
 PORT = 6999
