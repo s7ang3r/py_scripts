@@ -37,19 +37,19 @@ def Scrobble(filename):
     response = connection.getresponse()
     connection.close()
     if (response.status != 200):
-        print "Can't connect."
+        print "[-] Can't connect."
         quit()
     data = response.read().split("\n")
     data = [elem for elem in data if len(elem) > 0]
     if (data[0] != "OK"):
-        print "Last.fm error: %s" % data[0]
+        print "[-] Last.fm error: %s" % data[0]
         quit()
     url = urlparse.urlparse(data[3])
     submission_url = url.netloc
     submission_path = url.path
     session_id = data[1]
     connection = httplib.HTTPConnection(submission_url)
-    print "Scrobbling started."
+    print "[+] Scrobbling started."
     for line in filename.xreadlines():
         if not line.startswith('#'):
             data = line.split("\t")
@@ -75,20 +75,20 @@ def Scrobble(filename):
                     success += 1
                 else:
                     failure += 1
-                print "%s - %s [%s]" % (data[0], data[2], response)
+                print "[+] %s - %s [%s]" % (data[0], data[2], response)
     connection.close()
     filename.close()
-    print "%i tracks submitted.\n%i failed" % (success, failure)
+    print "[!] %i tracks submitted.\n%i failed" % (success, failure)
 
 
 if __name__ == "__main__":
     try:
         scrobbler_file = open('.scrobbler.log', 'r')
     except IOError:
-        print "Cant open file .scrobbler.log"
+        print "[-] Cant open file .scrobbler.log"
         quit()
     if (scrobbler_file.readline() != '#AUDIOSCROBBLER/1.1\n'):
-        print "Unknown file format."
+        print "[-] Unknown file format."
         scrobbler_file.close()
         quit()
     Scrobble(scrobbler_file)
