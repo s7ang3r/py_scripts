@@ -67,13 +67,13 @@ def FakeUpload(torrent_data):
         request = urllib2.Request(url, None, {'User-Agent': USER_AGENT})
         response = bencode.bdecode(urllib2.urlopen(request).read())
         if 'failure' in response:
-            print 'Announce failed: %s' % response['failure']
+            print '[-] Announce failed: %s' % response['failure']
             time.sleep(60)
         else:
             interval = response['interval']
             sleep_until = datetime.datetime.now() +\
                           datetime.timedelta(seconds=interval)
-            print 'Uploaded %s bytes, next request at %s.'\
+            print '[+] Uploaded %s bytes, next request at %s.'\
                     % (uploaded, sleep_until.strftime('%H:%M:%S'))
             uploaded += UPLOAD_SPEED * interval
             time.sleep(interval)
@@ -81,7 +81,7 @@ def FakeUpload(torrent_data):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print 'Usage: %s <filename.torrent> or several torrents' % sys.argv[0]
+        print '[?] Usage: %s <torrent or several torrents>' % sys.argv[0]
         sys.exit(1)
     for torrent in sys.argv[1:]:
         torrent_data = ReadTorrent(torrent)
