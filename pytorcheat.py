@@ -73,8 +73,10 @@ def FakeUpload(torrent_data):
             interval = response['interval']
             sleep_until = datetime.datetime.now() +\
                           datetime.timedelta(seconds=interval)
-            print '[+] Uploaded %s bytes, next request at %s.'\
-                    % (uploaded, sleep_until.strftime('%H:%M:%S'))
+            print '[+] Torrent: "%s" Uploaded: %s bytes, next request at: %s.'\
+                    % (torrent_data['info']['name'],\
+                       uploaded,\
+                       sleep_until.strftime('%H:%M:%S'))
             uploaded += UPLOAD_SPEED * interval
             time.sleep(interval)
 
