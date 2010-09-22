@@ -12,10 +12,10 @@ import urllib
 #HOST = 'e-shuushuu.net'
 #HOST = 'gelbooru.com'
 #HOST = 'nekobooru.net'
-#HOST = 'danbooru.donmai.us'
+HOST = 'danbooru.donmai.us'
 #HOST = 'konachan.com'
 #HOST = 'chan.sankakucomplex.com'
-HOST = 'moe.imouto.org'
+#HOST = 'moe.imouto.org'
 URL = '/post/index.xml'
 LIMIT = 1000
 
@@ -27,9 +27,8 @@ def MakeDir(dir):
 
 def Download(url, path):
     image = url.split("/")[-1]
-    print "[+] Downloading %s" % url
+    print "[+] Downloading %s" % image
     urllib.urlretrieve(url, path + image)
-    print "[+] Downloading of %s complete" % image
 
 
 def FetchIndex(limit, page):
@@ -65,7 +64,7 @@ if __name__ == "__main__":
             data += FetchIndex(LIMIT, page)
     imgs = re.findall('file_url="([^"]+)"', data)
     print "[+] Found %s images by tag: %s." % (len(imgs), sys.argv[1])
-    print "[+] Starting download."
+    print "[+] Starting download from: %s." % HOST
     for img in imgs:
         thread = threading.Thread(target=Download,\
                                   args=(img, dirname + '/'))
