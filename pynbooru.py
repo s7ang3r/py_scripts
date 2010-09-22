@@ -49,7 +49,7 @@ if __name__ == "__main__":
         print "[?] Usage: %s tag" % sys.argv[0]
         exit(1)
     try:
-        dirname = os.path.abspath(sys.argv[1])
+        dirname = '['+HOST+"]["+sys.argv[1]+']'
     except OSError:
         pass
     MakeDir(dirname)
