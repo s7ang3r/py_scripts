@@ -29,11 +29,11 @@ def Merge(lst, output=[]):
 
 
 def ZalgoChars(text, high=True, mid=False, low=True, zalgo_text=[]):
-    zalgo_chars = [z for z in
+    zalgo_chars = [char for char in
               [ zalgo_mid  if mid else None,
                zalgo_up  if high else None,
                zalgo_down if low else None ]
-              if z]    
+              if char]    
     for i in xrange(len(text)):
         zalgo_text.append(text[i])
         for j in xrange(random.randint(1,30)):
