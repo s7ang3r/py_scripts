@@ -22,6 +22,7 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u033a', u'\u033b', u'\u033c', u'\u0345', u'\u0347', u'\u0348',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
+
 def Merge(lst, output=[]):
     for el in lst:
         Merge(el) if isinstance(el, list) else output.append(el)
@@ -30,13 +31,13 @@ def Merge(lst, output=[]):
 
 def ZalgoChars(text, high=True, mid=False, low=True, zalgo_text=[]):
     zalgo_chars = [char for char in
-              [ zalgo_mid  if mid else None,
+              [zalgo_mid  if mid else None,
                zalgo_up  if high else None,
-               zalgo_down if low else None ]
+               zalgo_down if low else None]
               if char]    
     for i in xrange(len(text)):
         zalgo_text.append(text[i])
-        for j in xrange(random.randint(1,30)):
+        for j in xrange(random.randint(1, 30)):
             zalgo_text.append((random.choice(Merge(zalgo_chars))))
     return u''.join(zalgo_text)
 
