@@ -34,7 +34,7 @@ def ZalgoChars(text, high=True, mid=False, low=True, zalgo_text=[]):
               [zalgo_mid  if mid else None,
                zalgo_up  if high else None,
                zalgo_down if low else None]
-              if char]    
+              if char]
     for i in xrange(len(text)):
         zalgo_text.append(text[i])
         for j in xrange(random.randint(1, 30)):
