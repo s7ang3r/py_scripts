@@ -23,20 +23,20 @@ zalgo_down = [u'\u0316', u'\u0317', u'\u0318', u'\u0319', u'\u031c', u'\u031d',
               u'\u0349', u'\u034d', u'\u034e', u'\u0353', u'\u0323']
 
 
-def GenZalgoText(char, zchar):
-    chars = [char]
-    for z in zchar:
-        chars.extend(random.choice(z) for _ in xrange(random.randint(1, 3)))
-    return chars
-
-
-def ZalgoChars(text, high=True, mid=False, low=False):
-    zalgo_chars = [char for char in
-                   [zalgo_mid  if mid else None,
-                    zalgo_up  if high else None,
-                    zalgo_down if low else None]
-                   if char]
-    return u''.join(GenZalgoText(text, zalgo_chars))
+def ZalgoChars(text, high=True, mid=False, low=True):
+    if high:
+        zalgo_chars = zalgo_up
+    if mid:
+        zalgo_chars = zalgo_mid
+    if low:
+        zalgo_chars = zalgo_down
+    
+    zalgo_text=[]
+    for i in xrange(len(text)):
+        zalgo_text.append(text[i])
+        for j in xrange(random.randint(1,30)):
+            zalgo_text.append((random.choice(zalgo_chars)))
+    return u''.join(zalgo_text)
 
 
 if __name__ == "__main__":
