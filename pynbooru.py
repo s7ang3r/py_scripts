@@ -20,6 +20,10 @@ URL = '/post/index.xml'
 LIMIT = 1000
 
 
+def ParseOpts():
+    pass
+
+
 def MakeDir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
