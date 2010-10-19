@@ -22,7 +22,8 @@ LIMIT = 1000
 
 
 def ParseArgs():
-    
+    parser=optparse.OptionParser(usage="%prog [options] tag ",\
+                                 version="%prog 1.0")
     pass
 
 
