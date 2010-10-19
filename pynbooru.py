@@ -8,6 +8,7 @@ import sys
 import threading
 import time
 import urllib
+import optparse
 
 #HOST = 'e-shuushuu.net'
 #HOST = 'gelbooru.com'
@@ -20,7 +21,8 @@ URL = '/post/index.xml'
 LIMIT = 1000
 
 
-def ParseOpts():
+def ParseArgs():
+    
     pass
 
 
