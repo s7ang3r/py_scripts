@@ -24,11 +24,10 @@ LIMIT = 1000
 def ParseArgs():
     parser=optparse.OptionParser(usage="%prog [options] tag ",\
                                  version="%prog 1.0")
-    parser.add_option('-e','--engine',dest="engine",help="Eengine to use",default='danbooru',choices=["danbooru","gelbooru"])
-    parser.add_option('-u','--url',dest="url",help="danbooru url",default='http://danbooru.donmai.us')
-    parser.add_option('-l','--limit',dest='limit',help='posts per page limit', default=100)
-    parser.add_option('-d','--download',action='store_true',dest="download_mode",help="download content")
-    pass
+    parser.add_option('-h','--host',dest="host",help="Host",default='danbooru.donmai.us')
+    parser.add_option('-l','--limit',dest='limit',help='Posts per page limit', default=1000)
+    parser.add_option('-p','--print',action='store_true',dest="download_mode",help="Print content")
+    parser.add_option('-d','--download',action='store_true',dest="download_mode",help="Download content")
 
 
 def MakeDir(dir):
