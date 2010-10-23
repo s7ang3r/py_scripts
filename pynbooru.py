@@ -97,7 +97,7 @@ if __name__ == "__main__":
         for img in imgs:
             print img
     else:
-        print "[!] Found %s images by tag: %s." % (len(imgs), tags)
+        print "[!] Found %s images by tag: %s." % (len(imgs), tags[0])
         print "[!] Starting download from: %s." % options.engine
         try:
             dirname = '[' + options.engine + "][" + tags[0] + ']'
