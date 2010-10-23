@@ -10,13 +10,13 @@ import time
 import urllib
 import optparse
 
-#HOST = 'e-shuushuu.net'
-#HOST = 'gelbooru.com'
-#HOST = 'nekobooru.net'
-#HOST = 'danbooru.donmai.us'
-#HOST = 'konachan.com'
+#HOST = 'e-shuushuu.net' 404
+#HOST = 'gelbooru.com' 404
+#HOST = 'nekobooru.net' OK
+#HOST = 'danbooru.donmai.us' OK
+#HOST = 'konachan.com' OK
 #HOST = 'chan.sankakucomplex.com'
-#HOST = 'moe.imouto.org'
+#HOST = 'moe.imouto.org' 301
 
 
 def ParseArgs():
