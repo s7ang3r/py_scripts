@@ -47,25 +47,19 @@ def ParseArgs():
                       '--download',\
                       action='store_true',\
                       dest="download_mode",\
-                      help="Download content")
+                      help="Download content",\
+                      default=True)
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
     if not args:
         parser.print_help()
         exit(1)
-    print "Options: %s" % options
-    print "Args: %s" % args
     return (options, args)
 
 
 def MakeDir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
-
-
-def PrintContent(url, path):
-    image = url.split("/")[-1]
-    print image
 
 
 def DownloadContent(url, path):
@@ -79,10 +73,8 @@ def FetchIndex(limit, page, host, tags):
     args = urllib.urlencode({'tags': tags,\
                              'limit': limit,\
                              'page': page})
-    print args
     connection.request('GET', '/post/index.xml' + '?' + args)
     response = connection.getresponse()
-    print response.status
     if response.status != 200:
         print '[-] Unable to fetch index: HTTP%d' % response.status
         exit(1)
@@ -106,11 +98,15 @@ if __name__ == "__main__":
         for page in range(2, count / options.limit + 2):
             data += FetchIndex(options.limit, page, options.engine, tags[0])
     imgs = re.findall('file_url="([^"]+)"', data)
-    print "[!] Found %s images by tag: %s." % (len(imgs), tags)
-    print "[!] Starting download from: %s." % options.engine
-    for img in imgs:
-        thread = threading.Thread(target=DownloadContent,\
-                                  args=(img, dirname + '/'))
-        thread.start()
-        while threading.activeCount() > options.threads:
-            time.sleep(0.5)
+    if not options.download_mode:
+        for img in imgs:
+            print img
+    else:
+        print "[!] Found %s images by tag: %s." % (len(imgs), tags)
+        print "[!] Starting download from: %s." % options.engine
+        for img in imgs:
+            thread = threading.Thread(target=DownloadContent,\
+                                      args=(img, dirname + '/'))
+            thread.start()
+            while threading.activeCount() > options.threads:
+                time.sleep(0.5)
