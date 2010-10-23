@@ -107,6 +107,7 @@ if __name__ == "__main__":
         for img in imgs:
             thread = threading.Thread(target=DownloadContent,\
                                       args=(img, dirname + '/'))
-            thread.start()
-            while threading.activeCount() > options.threads:
+            if (threading.activeCount() > options.threads):
                 time.sleep(0.5)
+            else:
+                thread.start()
