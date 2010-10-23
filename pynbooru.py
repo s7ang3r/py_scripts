@@ -83,11 +83,6 @@ def FetchIndex(limit, page, host, tags):
 
 if __name__ == "__main__":
     (options, tags) = ParseArgs()
-    try:
-        dirname = '[' + options.engine + "][" + tags[0] + ']'
-    except OSError:
-        pass
-    MakeDir(dirname)
     data = FetchIndex(options.limit, 1, options.engine, tags[0])
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
@@ -104,6 +99,11 @@ if __name__ == "__main__":
     else:
         print "[!] Found %s images by tag: %s." % (len(imgs), tags)
         print "[!] Starting download from: %s." % options.engine
+        try:
+            dirname = '[' + options.engine + "][" + tags[0] + ']'
+        except OSError:
+            pass
+        MakeDir(dirname)
         for img in imgs:
             thread = threading.Thread(target=DownloadContent,\
                                       args=(img, dirname + '/'))
