@@ -32,6 +32,11 @@ def ParseArgs():
                       dest='limit',\
                       help='Posts per page limit',\
                       default=1000)
+    parser.add_option('-t',\
+                      '--threads',\
+                      dest='threads',\
+                      help='Downloading threads',\
+                      default=10)
     parser.add_option('-p',\
                       '--print',\
                       action='store_false',\
@@ -58,7 +63,12 @@ def MakeDir(dir):
         os.makedirs(dir)
 
 
-def Download(url, path):
+def PrintContent(url, path):
+    image = url.split("/")[-1]
+    print image
+
+
+def DownloadContent(url, path):
     image = url.split("/")[-1]
     print "[+] Downloading %s" % image
     urllib.urlretrieve(url, path + image)
@@ -69,8 +79,10 @@ def FetchIndex(limit, page, host, tags):
     args = urllib.urlencode({'tags': tags,\
                              'limit': limit,\
                              'page': page})
+    print args
     connection.request('GET', '/post/index.xml' + '?' + args)
     response = connection.getresponse()
+    print response.status
     if response.status != 200:
         print '[-] Unable to fetch index: HTTP%d' % response.status
         exit(1)
@@ -97,8 +109,8 @@ if __name__ == "__main__":
     print "[!] Found %s images by tag: %s." % (len(imgs), tags)
     print "[!] Starting download from: %s." % options.engine
     for img in imgs:
-        thread = threading.Thread(target=Download,\
+        thread = threading.Thread(target=DownloadContent,\
                                   args=(img, dirname + '/'))
         thread.start()
-        while threading.activeCount() > 10:
+        while threading.activeCount() > options.threads:
             time.sleep(0.5)
