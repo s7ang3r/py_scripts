@@ -22,12 +22,19 @@ LIMIT = 1000
 
 
 def ParseArgs():
-    parser=optparse.OptionParser(usage="%prog [options] tag ",\
-                                 version="%prog 1.0")
-    parser.add_option('-h','--host',dest="host",help="Host",default='danbooru.donmai.us')
+    parser=optparse.OptionParser(usage="%prog [options] tag ", version="%prog 1.0")
+    parser.add_option('-e','--enginee',dest="engine",help="Engine to use",default='danbooru.donmai.us')
     parser.add_option('-l','--limit',dest='limit',help='Posts per page limit', default=1000)
-    parser.add_option('-p','--print',action='store_true',dest="download_mode",help="Print content")
+    parser.add_option('-p','--print',action='store_false',dest="download_mode",help="Print content urls",default=False)
     parser.add_option('-d','--download',action='store_true',dest="download_mode",help="Download content")
+    optparse.IndentedHelpFormatter().set_long_opt_delimiter='z'
+    (options, args) = parser.parse_args()
+    if not args:
+        parser.print_help()
+        exit(1)
+    print "Options: %s" % options
+    print "Args: %s" % args
+    return (options, args)    
 
 
 def MakeDir(dir):
@@ -41,7 +48,7 @@ def Download(url, path):
     urllib.urlretrieve(url, path + image)
 
 
-def FetchIndex(limit, page):
+def FetchIndex(limit, page, host):
     connection = httplib.HTTPConnection(HOST)
     args = urllib.urlencode({'tags': sys.argv[1],\
                              'limit': limit,\
@@ -55,15 +62,13 @@ def FetchIndex(limit, page):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print "[?] Usage: %s tag" % sys.argv[0]
-        exit(1)
+    (options, tags)=ParseArgs()
     try:
-        dirname = '[' + HOST + "][" + sys.argv[1] + ']'
+        dirname = '[' + options.engine + "][" + tags[0] + ']'
     except OSError:
         pass
     MakeDir(dirname)
-    data = FetchIndex(LIMIT, 1)
+    data = FetchIndex(LIMIT, 1, options.engine)
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
     except:
@@ -73,8 +78,8 @@ if __name__ == "__main__":
         for page in range(2, count / LIMIT + 2):
             data += FetchIndex(LIMIT, page)
     imgs = re.findall('file_url="([^"]+)"', data)
-    print "[+] Found %s images by tag: %s." % (len(imgs), sys.argv[1])
-    print "[+] Starting download from: %s." % HOST
+    print "[!] Found %s images by tag: %s." % (len(imgs), tags)
+    print "[!] Starting download from: %s." % options.engine
     for img in imgs:
         thread = threading.Thread(target=Download,\
                                   args=(img, dirname + '/'))
