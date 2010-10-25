@@ -18,6 +18,18 @@ import time
 import urllib
 import urllib2
 import urlparse
+import optparse
+
+
+def ParseArgs():
+    parser = optparse.OptionParser(usage="%prog file ",\
+                                 version="%prog 0.8")
+    optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
+    (options, args) = parser.parse_args()
+    if not args:
+        parser.print_help()
+        exit(1)
+    return (options, args)
 
 
 def ReadTorrent(filename):
@@ -82,10 +94,8 @@ def FakeUpload(torrent_data):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print '[?] Usage: %s <torrent or several torrents>' % sys.argv[0]
-        sys.exit(1)
-    for torrent in sys.argv[1:]:
+    (options, args) = ParseArgs()
+    for torrent in args:
         torrent_data = ReadTorrent(torrent)
         thread = threading.Thread(target=FakeUpload, args=(torrent_data,))
         thread.start()
