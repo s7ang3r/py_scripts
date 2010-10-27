@@ -1,22 +1,22 @@
 #!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
-import httplib
 import os
 import re
-import sys
 import threading
 import time
 import urllib
+import urllib2
 import optparse
 
-#HOST = 'e-shuushuu.net' 404
-#HOST = 'gelbooru.com' 404
-#HOST = 'nekobooru.net' OK
-#HOST = 'danbooru.donmai.us' OK
-#HOST = 'konachan.com' OK
-#HOST = 'chan.sankakucomplex.com'
-#HOST = 'moe.imouto.org' 301
+#e-shuushuu.net 404
+#gelbooru.com 404
+
+#nekobooru.net
+#danbooru.donmai.us
+#konachan.com
+#chan.sankakucomplex.com
+#moe.imouto.org ===> oreno.imouto.org
 
 
 def ParseArgs():
@@ -57,6 +57,11 @@ def ParseArgs():
     return (options, args)
 
 
+def GenQuery(url, page, params):
+    str = '?' + '&'.join('%s=%s' % (k, v) for k, v in params.iteritems())
+    return urllib.urlopen(url + page + str)
+
+
 def MakeDir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
@@ -69,16 +74,14 @@ def DownloadContent(url, path):
 
 
 def FetchIndex(limit, page, host, tags):
-    connection = httplib.HTTPConnection(host)
-    args = urllib.urlencode({'tags': tags,\
-                             'limit': limit,\
-                             'page': page})
-    connection.request('GET', '/post/index.xml' + '?' + args)
-    response = connection.getresponse()
-    if response.status != 200:
-        print '[-] Unable to fetch index: HTTP%d' % response.status
-        exit(1)
-    return response.read()
+    if host != 'http://':
+        host = 'http://' + host
+    connection = GenQuery(host, "/post/index.xml", {'tags': tags,\
+                                                    'limit': limit,\
+                                                    'page': page})
+    response = connection.read()
+    print response
+    return response
 
 
 if __name__ == "__main__":
