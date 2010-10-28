@@ -9,23 +9,14 @@ import urllib
 import urllib2
 import optparse
 
-#e-shuushuu.net 404
-#gelbooru.com 404
-
-#nekobooru.net
-#danbooru.donmai.us
-#konachan.com
-#chan.sankakucomplex.com
-#moe.imouto.org ===> oreno.imouto.org
-
 
 def ParseArgs():
     parser = optparse.OptionParser(usage="%prog [options] tag ",\
                                  version="%prog 1.0")
-    parser.add_option('-e',\
-                      '--enginee',\
-                      dest="engine",\
-                      help="Engine to use",\
+    parser.add_option('-s',\
+                      '--site',\
+                      dest="site",\
+                      help="Site to use",\
                       default='danbooru.donmai.us')
     parser.add_option('-l',\
                       '--limit',\
@@ -86,7 +77,7 @@ def FetchIndex(limit, page, host, tags):
 
 if __name__ == "__main__":
     (options, tags) = ParseArgs()
-    data = FetchIndex(options.limit, 1, options.engine, tags[0])
+    data = FetchIndex(options.limit, 1, options.site, tags[0])
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
     except:
@@ -94,16 +85,16 @@ if __name__ == "__main__":
         exit(1)
     if count > options.limit:
         for page in range(2, count / options.limit + 2):
-            data += FetchIndex(options.limit, page, options.engine, tags[0])
+            data += FetchIndex(options.limit, page, options.site, tags[0])
     imgs = re.findall('file_url="([^"]+)"', data)
     if not options.download_mode:
         for img in imgs:
             print img
     else:
         print "[!] Found %s images by tag: %s." % (len(imgs), tags[0])
-        print "[!] Starting download from: %s." % options.engine
+        print "[!] Starting download from: %s." % options.site
         try:
-            dirname = '[' + options.engine + "][" + tags[0] + ']'
+            dirname = '[' + options.site + "][" + tags[0] + ']'
         except OSError:
             pass
         MakeDir(dirname)
