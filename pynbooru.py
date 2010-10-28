@@ -49,7 +49,8 @@ def ParseArgs():
 
 
 def GenQuery(url, page, params):
-    str = '?' + '&'.join('%s=%s' % (k, v) for k, v in params.iteritems())
+    str = '?' + '&'.join('%s=%s' % (par, value)\
+                         for par, value in params.iteritems())
     return urllib.urlopen(url + page + str)
 
 
@@ -71,7 +72,6 @@ def FetchIndex(limit, page, host, tags):
                                                     'limit': limit,\
                                                     'page': page})
     response = connection.read()
-    print response
     return response
 
 
