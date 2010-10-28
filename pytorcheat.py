@@ -12,7 +12,6 @@ import datetime
 import hashlib
 import random
 import string
-import sys
 import threading
 import time
 import urllib
