@@ -4,9 +4,7 @@
 import os
 import re
 import threading
-import time
 import urllib
-import urllib2
 import optparse
 
 
@@ -101,7 +99,9 @@ if __name__ == "__main__":
         for img in imgs:
             thread = threading.Thread(target=DownloadContent,\
                                       args=(img, dirname + '/'))
+            cond = threading.Condition()
+            cond.acquire()
             if (threading.activeCount() > options.threads):
-                time.sleep(0.5)
+                cond.wait(0.5)
             else:
                 thread.start()
