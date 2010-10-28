@@ -69,8 +69,7 @@ def FetchIndex(limit, page, host, tags):
     connection = GenQuery(host, "/post/index.xml", {'tags': tags,\
                                                     'limit': limit,\
                                                     'page': page})
-    response = connection.read()
-    return response
+    return connection.read()
 
 
 if __name__ == "__main__":
