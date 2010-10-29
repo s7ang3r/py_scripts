@@ -1,11 +1,11 @@
 #!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
+import optparse
 import os
 import re
 import threading
 import urllib
-import optparse
 
 
 def ParseArgs():
@@ -13,29 +13,29 @@ def ParseArgs():
                                  version="%prog 1.0")
     parser.add_option('-s',\
                       '--site',\
-                      dest="site",\
+                      dest='site',\
                       help="Site to use",\
                       default='danbooru.donmai.us')
     parser.add_option('-l',\
                       '--limit',\
                       dest='limit',\
-                      help='Posts per page limit',\
+                      help="Posts per page limit",\
                       default=1000)
     parser.add_option('-t',\
                       '--threads',\
                       dest='threads',\
-                      help='Downloading threads',\
-                      default=10)
+                      help="Downloading threads",\
+                      default=5)
     parser.add_option('-p',\
                       '--print',\
                       action='store_false',\
-                      dest="download_mode",\
+                      dest='download_mode',\
                       help="Print content urls",\
                       default=False)
     parser.add_option('-d',\
                       '--download',\
                       action='store_true',\
-                      dest="download_mode",\
+                      dest='download_mode',\
                       help="Download content",\
                       default=True)
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
@@ -55,25 +55,38 @@ def GenQuery(url, page, params):
 def MakeDir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
+        print "[!] Directory %s successfully created." % dir
+    else:
+        print "[!] Directory %s already exists." % dir
 
 
 def DownloadContent(url, path):
+    queue.acquire()
     image = url.split("/")[-1]
     print "[+] Downloading %s" % image
     urllib.urlretrieve(url, path + image)
+    queue.release()
 
 
 def FetchIndex(limit, page, host, tags):
-    if host != 'http://':
-        host = 'http://' + host
+    if host != "http://":
+        host = "http://" + host
     connection = GenQuery(host, "/post/index.xml", {'tags': tags,\
                                                     'limit': limit,\
                                                     'page': page})
+                                                    #'order': 'count'})
+    #connection = GenQuery(host, "/index.php", {'page': 'dapi',\
+    #                                               's': 'post',\
+    #                                               'q': 'index',\
+    #                                               'tags': tags,\
+    #                                               'limit': limit,\
+    #                                               'pid': page})
     return connection.read()
 
 
 if __name__ == "__main__":
     (options, tags) = ParseArgs()
+    queue = threading.BoundedSemaphore(options.threads)
     data = FetchIndex(options.limit, 1, options.site, tags[0])
     try:
         count = int(re.findall('<posts count="([0-9]+)"', data)[0])
@@ -98,9 +111,4 @@ if __name__ == "__main__":
         for img in imgs:
             thread = threading.Thread(target=DownloadContent,\
                                       args=(img, dirname + '/'))
-            cond = threading.Condition()
-            cond.acquire()
-            if (threading.activeCount() > options.threads):
-                cond.wait(0.5)
-            else:
-                thread.start()
+            thread.start()
