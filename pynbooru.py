@@ -69,19 +69,30 @@ def DownloadContent(url, path):
 
 
 def FetchIndex(limit, page, host, tags):
-    if host != "http://":
-        host = "http://" + host
-    connection = GenQuery(host, "/post/index.xml", {'tags': tags,\
-                                                    'limit': limit,\
-                                                    'page': page})
-                                                    #'order': 'count'})
-    #connection = GenQuery(host, "/index.php", {'page': 'dapi',\
-    #                                               's': 'post',\
-    #                                               'q': 'index',\
-    #                                               'tags': tags,\
-    #                                               'limit': limit,\
-    #                                               'pid': page})
-    return connection.read()
+    dan = GenQuery('http://'+host, "/post/index.xml", {'tags': tags,\
+                                                       'limit': limit,\
+                                                       'page': page})
+    #'order': 'count'})
+    gel = GenQuery('http://'+host, "/index.php", {'page': 'dapi',\
+                                                  's': 'post',\
+                                                  'q': 'index',\
+                                                  'tags': tags,\
+                                                  'limit': limit,\
+                                                  'pid': page})
+    if 'danbooru.donmai.us' in host:
+        return dan.read()
+    elif 'konachan.com' in host:
+        return dan.read()
+    elif 'oreno.imouto.org' in host:
+        return dan.read()
+    elif 'nekobooru.net' in host:
+        return dan.read()
+    elif 'e-shuushuu.net' in host:
+        return gel.read()
+    elif 'gelbooru.com' in host:
+        return gel.read()
+    elif 'chan.sankakucomplex.com' in host:
+        return gel.read()
 
 
 if __name__ == "__main__":
