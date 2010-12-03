@@ -16,3 +16,24 @@ def Md5File(filename):
         digest.update(buf)
     fh.close()
     return digest.hexdigest()
+
+
+def scandir(dir):
+    duplicate = {}
+    checksums = []
+    for root, dirs, files in os.walk(dir):
+        files = set(files) - set(IGNORE_FILES)
+        for file in files:
+            if IGNORE_HIDDEN and file.startswith('.'):
+                continue
+            name = os.path.join(root, file)
+            md5 = md5file(name)
+            if debug:
+                print >> sys.stderr, md5, name
+            checksums.append(md5)
+            if duplicate.get(md5):
+                print duplicate[md5]
+                print name
+                print
+            duplicate[md5] = name
+    return duplicate, checksums
