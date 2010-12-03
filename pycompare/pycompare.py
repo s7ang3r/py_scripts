@@ -8,7 +8,7 @@ import sys
 
 def Md5File(filename):
     fh = open(filename)
-    digest = md5.new()
+    digest = hashlib.md5.new()
     while 1:
         buf = fh.read(4096)
         if buf == "":
@@ -18,7 +18,7 @@ def Md5File(filename):
     return digest.hexdigest()
 
 
-def scandir(dir):
+def ScanDir(dir):
     duplicate = {}
     checksums = []
     for root, dirs, files in os.walk(dir):
