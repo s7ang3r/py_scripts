@@ -28,8 +28,6 @@ def ScanDir(dir):
                 continue
             name = os.path.join(root, file)
             md5 = md5file(name)
-            if debug:
-                print >> sys.stderr, md5, name
             checksums.append(md5)
             if duplicate.get(md5):
                 print duplicate[md5]
@@ -37,3 +35,5 @@ def ScanDir(dir):
                 print
             duplicate[md5] = name
     return duplicate, checksums
+
+
