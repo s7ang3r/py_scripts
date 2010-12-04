@@ -46,6 +46,7 @@ def PrintResults(checksums, duplicate1, duplicate2=None):
         else:
             print duplicate1[sums]
 
+
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print 'Usage: %s dir1 dir2' % sys.argv[0]
