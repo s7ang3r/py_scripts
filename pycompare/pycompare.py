@@ -37,3 +37,12 @@ def ScanDir(dir):
     return duplicate, checksums
 
 
+def PrintResults():
+    pass
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print 'Usage: %s dir1 dir2' % sys.argv[0]
+        sys.exit(1)
+    directory1 = sys.argv[1]
+    directory2 = sys.argv[2]
