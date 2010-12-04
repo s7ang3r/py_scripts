@@ -37,8 +37,14 @@ def ScanDir(dir):
     return duplicate, checksums
 
 
-def PrintResults():
-    pass
+def PrintResults(checksums, duplicate1, duplicate2=None):
+    for sums in checksums:
+        if duplicate2 != None:
+            print duplicate1[sums]
+            print duplicate2[sums]
+            print
+        else:
+            print duplicate1[sums]
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -46,5 +52,12 @@ if __name__ == "__main__":
         sys.exit(1)
     directory1 = sys.argv[1]
     directory2 = sys.argv[2]
+    print 'Duplicates'
     duplicate1, checksums1 = ScanDir(directory1)
     duplicate2, checksums2 = ScanDir(directory2)
+    print 'Commons'
+    PrintResults(set(checksums1) & set(checksums2), duplicate1, duplicate2)
+    print 'Files only in', directory1
+    PrintResults(set(checksums1) - set(checksums2), duplicate1)
+    print 'Files only in', directory2
+    PrintResults(set(checksums2) - set(checksums1), duplicate2)
