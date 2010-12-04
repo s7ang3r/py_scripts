@@ -22,9 +22,9 @@ def ScanDir(dir):
     duplicate = {}
     checksums = []
     for root, dirs, files in os.walk(dir):
-        files = set(files) - set(IGNORE_FILES)
+        files = set(files)
         for file in files:
-            if IGNORE_HIDDEN and file.startswith('.'):
+            if file.startswith('.'):
                 continue
             name = os.path.join(root, file)
             md5 = md5file(name)
