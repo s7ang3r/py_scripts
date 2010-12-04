@@ -1,14 +1,14 @@
 #!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
-import hashlib
+import md5
 import os
 import sys
 
 
 def Md5File(filename):
     fh = open(filename)
-    digest = hashlib.md5.new()
+    digest = md5.new()
     while 1:
         buf = fh.read(4096)
         if buf == "":
@@ -27,7 +27,7 @@ def ScanDir(dir):
             if file.startswith('.'):
                 continue
             name = os.path.join(root, file)
-            md5 = md5file(name)
+            md5 = Md5File(name)
             checksums.append(md5)
             if duplicate.get(md5):
                 print duplicate[md5]
@@ -46,3 +46,5 @@ if __name__ == "__main__":
         sys.exit(1)
     directory1 = sys.argv[1]
     directory2 = sys.argv[2]
+    duplicate1, checksums1 = ScanDir(directory1)
+    duplicate2, checksums2 = ScanDir(directory2)
