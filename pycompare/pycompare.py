@@ -53,12 +53,12 @@ if __name__ == "__main__":
         sys.exit(1)
     directory1 = sys.argv[1]
     directory2 = sys.argv[2]
-    print 'Duplicates'
+    print '[Duplicate files]'+'='*10
     duplicate1, checksums1 = ScanDir(directory1)
     duplicate2, checksums2 = ScanDir(directory2)
-    print 'Commons'
+    print '[Common files]'+'='*10
     PrintResults(set(checksums1) & set(checksums2), duplicate1, duplicate2)
-    print 'Files only in', directory1
+    print '[Files only in]'+'='*10, directory1
     PrintResults(set(checksums1) - set(checksums2), duplicate1)
-    print 'Files only in', directory2
+    print '[Files only in]'+'='*10, directory2
     PrintResults(set(checksums2) - set(checksums1), duplicate2)
