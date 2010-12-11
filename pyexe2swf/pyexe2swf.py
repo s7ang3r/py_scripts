@@ -6,8 +6,8 @@ import sys
 
 
 def SwfPosition(filename):
-    filename.seek()
-    pass
+    filename.seek(0,2)
+    filesize = filename.tell()
 
 
 def ExtractSwf(filein, fileout, position):
