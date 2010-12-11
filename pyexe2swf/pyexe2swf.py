@@ -6,6 +6,7 @@ import sys
 
 
 def SwfPosition(filename):
+    filename.seek()
     pass
 
 
