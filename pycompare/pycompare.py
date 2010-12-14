@@ -18,14 +18,14 @@ def ParseArgs():
 
 
 def Md5File(filename):
-    fh = open(filename)
+    file = open(filename)
     digest = hashlib.new('md5')
     while 1:
-        buf = fh.read(4096)
+        buf = file.read(4096)
         if buf == "":
             break
         digest.update(buf)
-    fh.close()
+    file.close()
     return digest.hexdigest()
 
 
