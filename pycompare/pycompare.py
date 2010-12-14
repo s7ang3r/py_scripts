@@ -39,6 +39,7 @@ def ScanDir(dir):
                 continue
             name = os.path.join(root, file)
             md5 = Md5File(name)
+            print md5, name
             checksums.append(md5)
             if duplicate.get(md5):
                 print duplicate[md5]
@@ -62,12 +63,12 @@ if __name__ == "__main__":
     (options, tags) = ParseArgs()
     directory1 = sys.argv[1]
     directory2 = sys.argv[2]
-    print '[!] Duplicate files]' + '=' * 10
+    print '[!] Duplicate files:'
     duplicate1, checksums1 = ScanDir(directory1)
     duplicate2, checksums2 = ScanDir(directory2)
-    print '[!] Common files]' + '=' * 10
+    print '[!] Common files:'
     PrintResults(set(checksums1) & set(checksums2), duplicate1, duplicate2)
-    print '[!] Files only in]' + '=' * 10, directory1
+    print '[!] Files only in:', directory1
     PrintResults(set(checksums1) - set(checksums2), duplicate1)
-    print '[!] Files only in]' + '=' * 10, directory2
+    print '[!] Files only in:', directory2
     PrintResults(set(checksums2) - set(checksums1), duplicate2)
