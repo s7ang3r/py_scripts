@@ -1,9 +1,20 @@
 #!/usr/bin/python -O
 # -*- coding: utf-8 -*-
 
+import optparse
 import hashlib
 import os
 import sys
+
+
+def ParseArgs():
+    parser = optparse.OptionParser(usage="%prog  directory1 directory2",\
+                                   version="%prog 0.5")
+    (options, args) = parser.parse_args()
+    if not args:
+        parser.print_help()
+        exit(1)
+    return (options, args)
 
 
 def Md5File(filename):
@@ -48,17 +59,15 @@ def PrintResults(checksums, duplicate1, duplicate2=None):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print 'Usage: %s dir1 dir2' % sys.argv[0]
-        sys.exit(1)
+    (options, tags) = ParseArgs()
     directory1 = sys.argv[1]
     directory2 = sys.argv[2]
-    print '[Duplicate files]' + '=' * 10
+    print '[!] Duplicate files]' + '=' * 10
     duplicate1, checksums1 = ScanDir(directory1)
     duplicate2, checksums2 = ScanDir(directory2)
-    print '[Common files]' + '=' * 10
+    print '[!] Common files]' + '=' * 10
     PrintResults(set(checksums1) & set(checksums2), duplicate1, duplicate2)
-    print '[Files only in]' + '=' * 10, directory1
+    print '[!] Files only in]' + '=' * 10, directory1
     PrintResults(set(checksums1) - set(checksums2), duplicate1)
-    print '[Files only in]' + '=' * 10, directory2
+    print '[!] Files only in]' + '=' * 10, directory2
     PrintResults(set(checksums2) - set(checksums1), duplicate2)
