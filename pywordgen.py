@@ -8,6 +8,22 @@ import os
 def ParseArgs():
     parser = optparse.OptionParser(usage="%prog [options] ",\
                                  version="%prog 0.3")
+    parser.add_option('-n',\
+                      '--numbers',\
+                      dest='numb',\
+                      help="",\
+                      default='')
+    parser.add_option('-c',\
+                      '--capitals',\
+                      dest='caps',\
+                      help="",\
+                      default='')
+    parser.add_option('-l',\
+                      '--lowercase',\
+                      dest='lows',\
+                      help="",\
+                      default='')
+    
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
     if not args:
