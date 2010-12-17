@@ -10,32 +10,31 @@ def ParseArgs():
                                  version="%prog 0.3")
     parser.add_option('--numbers',\
                       dest='numb',\
-                      help="",\
-                      default='')
+                      help="Numbers")
     parser.add_option('--capitals',\
                       dest='caps',\
-                      help="",\
-                      default='')
+                      help="Capital Letters")
     parser.add_option('--lowercase',\
                       dest='lows',\
-                      help="",\
-                      default='')
+                      help="Lowercase Letters")
     parser.add_option('--numcaps',\
                       dest='numcaps',\
-                      help="",\
-                      default='')
+                      help="Numbers + Capital Letters")
     parser.add_option('--numlow',\
                       dest='numlowlows',\
-                      help="",\
-                      default='')
+                      help="Numbers + Lowercase Letters")
     parser.add_option('--numcapslow',\
                       dest='numcapslow',\
-                      help="",\
-                      default='')
+                      help="Numbers + Capital Letters + Lowercase Letters")
     parser.add_option('--capslow',\
                       dest='capslow',\
-                      help="",\
-                      default='')
+                      help="Capital Letters + Lowercase Letters")
+    parser.add_option('--min',\
+                      dest='min',\
+                      help="Minimum size of the word")
+    parser.add_option('--max',\
+                      dest='max',\
+                      help="Maximum size of the word")
     
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
