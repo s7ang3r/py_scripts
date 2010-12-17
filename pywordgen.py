@@ -12,7 +12,7 @@ def ParseArgs():
 
 
 if __name__ == "__main__":
-    numbers = range(48,58)
+    nums = range(48,58)
     caps = range(65,91)
     lows = range(97,123)
     numFile = 0
