@@ -8,19 +8,28 @@ import os
 def ParseArgs():
     parser = optparse.OptionParser(usage="%prog [options] ",\
                                  version="%prog 0.3")
-    parser.add_option('-n',\
-                      '--numbers',\
+    parser.add_option('--numbers',\
                       dest='numb',\
                       help="",\
                       default='')
-    parser.add_option('-c',\
-                      '--capitals',\
+    parser.add_option('--capitals',\
                       dest='caps',\
                       help="",\
                       default='')
-    parser.add_option('-l',\
-                      '--lowercase',\
+    parser.add_option('--lowercase',\
                       dest='lows',\
+                      help="",\
+                      default='')
+    parser.add_option('--numcaps',\
+                      dest='numcaps',\
+                      help="",\
+                      default='')
+    parser.add_option('--numlow',\
+                      dest='numlowlows',\
+                      help="",\
+                      default='')
+    parser.add_option('--numcapslow',\
+                      dest='numcapslow',\
                       help="",\
                       default='')
     
