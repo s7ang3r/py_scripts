@@ -54,10 +54,14 @@ if __name__ == "__main__":
     nums = range(48, 58)
     caps = range(65, 91)
     lows = range(97, 123)
+    maxsize = 100 * 1024 * 1024
+    check = 1000
+    count = 0
     numFile = 0
     f = open('wordlist-' + str(numFile) + '.txt', 'w')
     minimum = int(options.min)
     maximum = int(options.max)
+    genlist = []
     poss = []
     if options.numbs:
         poss += nums
@@ -85,3 +89,5 @@ if __name__ == "__main__":
         poss += caps
         poss += lows
         print "capslow"
+    for i in poss:
+        genlist.append(str(chr(i)))
