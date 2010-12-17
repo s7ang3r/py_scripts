@@ -32,6 +32,10 @@ def ParseArgs():
                       dest='numcapslow',\
                       help="",\
                       default='')
+    parser.add_option('--capslow',\
+                      dest='capslow',\
+                      help="",\
+                      default='')
     
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
