@@ -12,4 +12,5 @@ def ParseArgs():
 
 
 if __name__ == "__main__":
-    pass
+    numFile = 0
+    f=open('wordlist-' + str(numFile) + '.txt', 'w')
