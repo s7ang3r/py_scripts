@@ -35,7 +35,6 @@ def ParseArgs():
     parser.add_option('--max',\
                       dest='max',\
                       help="Maximum size of the word")
-    
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
     if not args:
@@ -46,8 +45,8 @@ def ParseArgs():
 
 if __name__ == "__main__":
     (options, tags) = ParseArgs()
-    nums = range(48,58)
-    caps = range(65,91)
-    lows = range(97,123)
+    nums = range(48, 58)
+    caps = range(65, 91)
+    lows = range(97, 123)
     numFile = 0
-    f=open('wordlist-' + str(numFile) + '.txt', 'w')
+    f = open('wordlist-' + str(numFile) + '.txt', 'w')
