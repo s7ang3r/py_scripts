@@ -3,7 +3,6 @@
 
 import optparse
 import os
-import time
 
 
 def ParseArgs():
