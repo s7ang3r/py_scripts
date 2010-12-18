@@ -43,7 +43,7 @@ def ParseArgs():
     parser.add_option('--max',\
                       dest='max',\
                       help="Maximum size of the word",\
-                      default=5)
+                      default=3)
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
     return (options, args)
@@ -62,40 +62,44 @@ if __name__ == "__main__":
     nums = range(48, 58)
     caps = range(65, 91)
     lows = range(97, 123)
-    maxsize = 100 * 1024 * 1024
-    check = 1000
     count = 0
-    numFile = 0
-    f = open('wordlist-' + str(numFile) + '.txt', 'w')
+    numfile = 0
+    file = open('wordlist-' + str(numfile) + '.txt', 'w')
     minimum = int(options.min)
     maximum = int(options.max)
     genlist = []
     poss = []
     if options.nums:
         poss += nums
-        print "nums"
     elif options.caps:
         poss += caps
-        print "caps"
     elif options.lows:
         poss += lows
-        print "lows"
     elif options.numscaps:
         poss += nums
         poss += caps
-        print "numscaps"
     elif options.numslows:
         poss += nums
         poss += lows
-        print "numslows"
     elif options.numcapslows:
         poss += nums
         poss += caps
         poss += lows
-        print "numcapslows"
     elif options.capslows:
         poss += caps
         poss += lows
-        print "capslows"
     for i in poss:
         genlist.append(str(chr(i)))
+    for i in range(minimum,maximum+1):
+        for s in Selection(genlist,i):
+            count += 1
+            file.write(''.join(s) + '\n')
+            if count >= 1000:
+                size = os.path.getsize('wordlist-' + str(numfile) + '.txt')
+                if size > 100 * 1024 * 1024:
+                    file.close()
+                    numfile += 1
+                    file=open('wordlist-' + str(numfile) + '.txt', 'w')
+                    count = 0
+                    print 'New File. Current word: ', ''.join(s)
+    file.close()
