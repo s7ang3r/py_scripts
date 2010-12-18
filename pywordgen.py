@@ -50,11 +50,12 @@ def ParseArgs():
 
 
 def Selection(items, n):
-    if n==0: yield []
+    if n == 0:
+        yield []
     else:
         for i in xrange(len(items)):
-            for x in Selection(items, n-1):
-                yield [items[i]]+x
+            for x in Selection(items, n - 1):
+                yield [items[i]] + x
 
 
 if __name__ == "__main__":
@@ -90,8 +91,8 @@ if __name__ == "__main__":
         poss += lows
     for i in poss:
         genlist.append(str(chr(i)))
-    for i in range(minimum,maximum+1):
-        for s in Selection(genlist,i):
+    for i in range(minimum, maximum + 1):
+        for s in Selection(genlist, i):
             count += 1
             file.write(''.join(s) + '\n')
             if count >= 1000:
@@ -99,7 +100,7 @@ if __name__ == "__main__":
                 if size > 100 * 1024 * 1024:
                     file.close()
                     numfile += 1
-                    file=open('wordlist-' + str(numfile) + '.txt', 'w')
+                    file = open('wordlist-' + str(numfile) + '.txt', 'w')
                     count = 0
                     print 'New File. Current word: ', ''.join(s)
     file.close()
