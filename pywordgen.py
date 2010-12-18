@@ -44,6 +44,10 @@ def ParseArgs():
                       dest='max',\
                       help="Maximum size of the word",\
                       default=3)
+    parser.add_option('--filesize',\
+                      dest='filesize',\
+                      help="Maximum size (in MB) of generated file",\
+                      default=100)
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
     return (options, args)
@@ -97,7 +101,7 @@ if __name__ == "__main__":
             file.write(''.join(s) + '\n')
             if count >= 1000:
                 size = os.path.getsize('wordlist-' + str(numfile) + '.txt')
-                if size > 100 * 1024 * 1024:
+                if size > options.filesize * 1024 * 1024:
                     file.close()
                     numfile += 1
                     file = open('wordlist-' + str(numfile) + '.txt', 'w')
