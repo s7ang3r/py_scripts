@@ -10,7 +10,7 @@ def ParseArgs():
                                  version="%prog 0.3")
     parser.add_option('--numbers',\
                       action="store_true",\
-                      dest='numbs',\
+                      dest='nums',\
                       help="Numbers")
     parser.add_option('--capitals',\
                       action="store_true",\
@@ -20,21 +20,21 @@ def ParseArgs():
                       action="store_true",\
                       dest='lows',\
                       help="Lowercase Letters")
-    parser.add_option('--numcaps',\
+    parser.add_option('--numscaps',\
                       action="store_true",\
-                      dest='numcaps',\
+                      dest='numscaps',\
                       help="Numbers + Capital Letters")
-    parser.add_option('--numlow',\
+    parser.add_option('--numslows',\
                       action="store_true",\
-                      dest='numlow',\
+                      dest='numslows',\
                       help="Numbers + Lowercase Letters")
-    parser.add_option('--numcapslow',\
+    parser.add_option('--numcapslows',\
                       action="store_true",\
-                      dest='numcapslow',\
+                      dest='numcapslows',\
                       help="Numbers + Capital Letters + Lowercase Letters")
-    parser.add_option('--capslow',\
+    parser.add_option('--capslows',\
                       action="store_true",\
-                      dest='capslow',\
+                      dest='capslows',\
                       help="Capital Letters + Lowercase Letters")
     parser.add_option('--min',\
                       dest='min',\
@@ -47,6 +47,14 @@ def ParseArgs():
     optparse.IndentedHelpFormatter().set_long_opt_delimiter = 'z'
     (options, args) = parser.parse_args()
     return (options, args)
+
+
+def Selection(items, n):
+    if n==0: yield []
+    else:
+        for i in xrange(len(items)):
+            for x in Selection(items, n-1):
+                yield [items[i]]+x
 
 
 if __name__ == "__main__":
@@ -63,31 +71,31 @@ if __name__ == "__main__":
     maximum = int(options.max)
     genlist = []
     poss = []
-    if options.numbs:
+    if options.nums:
         poss += nums
-        print "numb"
+        print "nums"
     elif options.caps:
         poss += caps
         print "caps"
     elif options.lows:
         poss += lows
         print "lows"
-    elif options.numcaps:
+    elif options.numscaps:
         poss += nums
         poss += caps
         print "numscaps"
-    elif options.numlow:
+    elif options.numslows:
         poss += nums
         poss += lows
         print "numslows"
-    elif options.numcapslow:
+    elif options.numcapslows:
         poss += nums
         poss += caps
         poss += lows
-        print "numcapslow"
-    elif options.capslow:
+        print "numcapslows"
+    elif options.capslows:
         poss += caps
         poss += lows
-        print "capslow"
+        print "capslows"
     for i in poss:
         genlist.append(str(chr(i)))
